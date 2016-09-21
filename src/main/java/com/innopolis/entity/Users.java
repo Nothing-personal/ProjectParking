@@ -10,8 +10,7 @@ public class Users implements DomainObject {
     private String phone;
     private String password;
 
-    public Users(int id, String email, String phone, String password) {
-        this.id = id;
+    public Users(String email, String phone, String password) {
         this.email = email;
         this.phone = phone;
         this.password = password;

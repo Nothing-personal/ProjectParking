@@ -1,6 +1,7 @@
 package com.innopolis.controller;
 
 import com.innopolis.service.ParkingService;
+import com.innopolis.service.UserServiceImpl;
 import com.innopolis.utils.Ajax;
 import com.innopolis.utils.RestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,15 @@ import java.util.Map;
  */
 
 @Controller
-public class ParkingController extends ExceptionHandlerController {
+public class DataController extends ExceptionHandlerController {
 
     @Autowired
     @Qualifier("parkingService")
     private ParkingService parkingService;
+
+    @Autowired
+    @Qualifier("userService")
+    private UserServiceImpl userService;
 
     @RequestMapping(value = "/addParking", method = RequestMethod.POST)
     public @ResponseBody
@@ -43,5 +48,22 @@ public class ParkingController extends ExceptionHandlerController {
     public @ResponseBody
     String showParkings() {
         return parkingService.showParkings();
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> addUser(@RequestParam("email") String email,
+                                @RequestParam("phone") String phone,
+                                @RequestParam("password") String password)
+                                throws RestException {
+        try {
+            if (email == null || phone == null || password == null) {
+                return Ajax.emptyResponse();
+            }
+            userService.addUser(email, phone, password);
+            return Ajax.emptyResponse();
+        } catch (Exception e) {
+            throw new RestException(e);
+        }
     }
 }

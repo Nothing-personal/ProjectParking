@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import java.sql.Types;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Kevin Khanda on 21.09.2016.
@@ -20,7 +18,7 @@ public class ParkingRepositoryImpl implements ParkingRepository<Parking> {
     @Autowired
     protected JpaConfig jpaConfig = new JpaConfig();
 
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate(jpaConfig.configureDataSource());
+    protected JdbcTemplate jdbcTemplate = new JdbcTemplate(jpaConfig.configureDataSource());
 
     @Override
     public void addParking(Parking parking) {
