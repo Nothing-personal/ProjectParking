@@ -38,4 +38,10 @@ public class ParkingController extends ExceptionHandlerController {
             throw new RestException(e);
         }
     }
+
+    @RequestMapping(value = "/showParkings", method = RequestMethod.GET)
+    public @ResponseBody
+    String showParkings() {
+        return parkingService.showParkings();
+    }
 }

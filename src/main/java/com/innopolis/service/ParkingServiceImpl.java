@@ -26,4 +26,10 @@ public class ParkingServiceImpl implements ParkingService {
             return false;
         }
     }
+
+    @Override
+    public String showParkings() {
+        return parkingRepository.showParkings();
+    }
+
 }

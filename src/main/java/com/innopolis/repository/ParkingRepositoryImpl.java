@@ -4,8 +4,10 @@ import com.innopolis.config.JpaConfig;
 import com.innopolis.entity.Parking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import java.sql.Types;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +32,17 @@ public class ParkingRepositoryImpl implements ParkingRepository<Parking> {
     }
 
     @Override
-    public Set<String> getParkings() {
-        return null;
+    public String showParkings() {
+        String result = "";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet("SELECT parking_name, capacity" +
+                ", coordinates FROM parking");
+        result += "[" + "\n";
+        while (rowSet.next()) {
+            result += "{\"parkingName\":\"" + rowSet.getString("parking_name") + "\",";
+            result += "\"capacity\":\"" + rowSet.getString("capacity") + "\",";
+            result += "\"coordinates\":\"" + rowSet.getString("coordinates") + "\"},\n";
+        }
+        result += "]";
+        return result;
     }
 }
