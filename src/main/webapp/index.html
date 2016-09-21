@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Parking</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="js/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+<h1>PARKINGS</h1>
+<div>
+    <h4>Enter coordinates</h4>
+    <input type="text" id="coordinates"/>
+</div>
+<div>
+    <h4>Enter capacity</h4>
+    <input type="text" id="capacity">
+</div>
+<div>
+    <h4>Enter parking name</h4>
+    <input type="text" id="parkingName">
+</div>
+<a id="post" href="#">POST</a>
+
+<div id="container"></div>
+</body>
+
+<script>
+    /*$('#get').click(function () {
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: '/getRandomData',
+            data: "",
+            success: function (response) {
+                var html = "";
+                $.each(response.data, function (i) {
+                    html = html + response.data[i] + "<br/>";
+                });
+                $('#container').html(html);
+            }
+        });
+    });*/
+
+    $('#post').click(function () {
+        if (!$("#coordinates").val() || !$("#capacity") || !$("#parkingName")) {
+            alert("Enter your data!");
+        } else {
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: '/addParking',
+                data: {
+                    'coordinates': $("#coordinates").val(),
+                    'capacity': $("#capacity").val(),
+                    'parkingName': $("#parkingName").val()
+                },
+                success: function (response) {
+                    $('#get').click();
+                }
+            });
+        }
+
+    });
+
+</script>
+</html>
